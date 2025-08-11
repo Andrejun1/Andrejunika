@@ -107,6 +107,7 @@ function Navbar() {
               className="md:hidden absolute left-3 right-3 top-[calc(100%+8px)] rounded-2xl overflow-hidden bg-black/60 dark:bg-black/60 bg-white/80 backdrop-blur-xl border border-white/10 dark:border-white/10 border-slate-200"
             >
               <div className="flex flex-col py-2 text-white dark:text-white text-slate-800 drop-shadow-md">
+                <div className="flex flex-col py-2 text-white pointer-events-auto">
                 {links.map((l) => (
                   <a
                     key={l.href}
