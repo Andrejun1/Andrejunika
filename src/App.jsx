@@ -16,7 +16,7 @@ import Project3 from './assets/Zodiak.png'
 
 
 const Section = ({ id, children }) => (
-  <section id={id} className="relative py-24 sm:py-28 md:py-32">
+  <section id={id} className="relative py-6 sm:py-10 md:py-14">
     <div className="absolute inset-0 exaid-grid pointer-events-none" />
     <div className="relative container mx-auto px-5 max-w-6xl">
       {children}
