@@ -91,7 +91,6 @@ function Navbar() {
                 className="h-9 w-9 grid place-items-center rounded-lg border border-white/20 dark:border-white/20 border-slate-300 text-white/90 dark:text-white/90 text-slate-700 bg-black/70 dark:bg-black/70 bg-white/70 backdrop-blur"
                 aria-label={menuOpen ? 'Close menu' : 'Open menu'}
                 onClick={() => setMenuOpen((v) => !v)}
-                onTouchStart={() => setMenuOpen((v) => !v)}
               >
                 {menuOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
               </button>
