@@ -296,7 +296,7 @@ function Projects() {
       name: 'Website Innovation Computer',
       image: Project3,
       desc: 'Landing page for an innovative computer company connected to WhatsApp for booking.',
-      tags: ['React', 'Vite', 'TypeScript'],
+      tags: ['React', 'Vite', 'Tailwind', 'TypeScript'],
       live: 'https://incomp.vercel.app/',
       github: 'https://github.com/Andrejun1/Incomp'
     }
