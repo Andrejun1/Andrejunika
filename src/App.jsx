@@ -293,12 +293,12 @@ function Projects() {
       github: 'https://github.com/Andrejun1/PosyanduPerumKorpri'
     },
     {
-      name: 'Zodiac forecast',
+      name: 'Website Innovation Computer',
       image: Project3,
-      desc: 'Website for predicting your zodiac sign and fortune.',
-      tags: ['Html', 'Css'],
-      live: 'https://andrejun1.github.io/Zodiak/',
-      github: 'https://github.com/Andrejun1/Zodiak'
+      desc: 'Landing page for an innovative computer company connected to WhatsApp for booking.',
+      tags: ['React', 'Vite', 'TypeScript'],
+      live: 'https://incomp.vercel.app/',
+      github: 'https://github.com/Andrejun1/Incomp'
     }
   ]), [])
 
