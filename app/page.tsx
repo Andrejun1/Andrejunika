@@ -13,7 +13,7 @@ import React, { useRef } from "react";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import PreLoader from "@/components/PreLoader"
+import PreLoader from "@/components/PreLoader";
 
 // UI Components
 import { Separator } from "@/components/ui/separator";
@@ -674,12 +674,7 @@ export default function Home() {
         animate={{
           y: 0,
           opacity: 1,
-          transition: {
-            delay: 1,
-            duration: 0.8,
-            type: "spring",
-            bounce: 0.4,
-          },
+          transition: { delay: 1, duration: 0.8, type: "spring", bounce: 0.4 },
         }}
       >
         <TooltipProvider>
@@ -690,25 +685,21 @@ export default function Home() {
             iconMagnification={60}
             iconDistance={100}
           >
-            {/* Navigation Items with stagger */}
+            {/* Navigation Items */}
             {siteConfig.navbar.map((item, index) => (
-              <motion.div
-                key={item.label}
-                initial={{ y: 50, opacity: 0 }}
-                animate={{
-                  y: 0,
-                  opacity: 1,
-                  transition: {
-                    delay: 1.2 + index * 0.1,
-                    duration: 0.5,
-                    type: "spring",
-                    bounce: 0.3,
-                  },
-                }}
-              >
-                <DockIcon>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
+              <DockIcon key={item.label}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.5 }}
+                      transition={{
+                        delay: 1.2 + index * 0.1,
+                        type: "spring",
+                        bounce: 0.4,
+                      }}
+                    >
                       <Link
                         href={item.href}
                         aria-label={item.label}
@@ -719,37 +710,33 @@ export default function Home() {
                       >
                         <item.icon className="size-4 sm:size-6" />
                       </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{item.label}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </DockIcon>
-              </motion.div>
+                    </motion.div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{item.label}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </DockIcon>
             ))}
 
             <Separator orientation="vertical" className="h-full mx-1" />
 
-            {/* Social Media Icons */}
+            {/* Social Icons */}
             {Object.entries(siteConfig.contact.social).map(
               ([name, social], index) => (
-                <motion.div
-                  key={name}
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={{
-                    y: 0,
-                    opacity: 1,
-                    transition: {
-                      delay: 1.4 + index * 0.1,
-                      duration: 0.5,
-                      type: "spring",
-                      bounce: 0.3,
-                    },
-                  }}
-                >
-                  <DockIcon>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
+                <DockIcon key={name}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        whileHover={{ scale: 1.5 }}
+                        transition={{
+                          delay: 1.4 + index * 0.1,
+                          type: "spring",
+                          bounce: 0.4,
+                        }}
+                      >
                         <Link
                           href={social.url}
                           aria-label={social.name}
@@ -760,175 +747,39 @@ export default function Home() {
                         >
                           <social.icon className="size-4 sm:size-6" />
                         </Link>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{name}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </DockIcon>
-                </motion.div>
+                      </motion.div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{name}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </DockIcon>
               )
             )}
 
             <Separator orientation="vertical" className="h-full mx-1" />
 
             {/* Theme Toggle */}
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{
-                y: 0,
-                opacity: 1,
-                transition: {
-                  delay: 1.8,
-                  duration: 0.5,
-                  type: "spring",
-                  bounce: 0.3,
-                },
-              }}
-            >
-              <DockIcon>
-                <Tooltip>
-                  <TooltipTrigger asChild>
+            <DockIcon>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    whileHover={{ scale: 1.5 }}
+                    transition={{ delay: 1.8, type: "spring", bounce: 0.4 }}
+                  >
                     <AnimatedThemeToggler className="size-10 sm:size-12 rounded-full hover:bg-accent flex items-center justify-center" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Theme</p>
-                  </TooltipContent>
-                </Tooltip>
-              </DockIcon>
-            </motion.div>
+                  </motion.div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Theme</p>
+                </TooltipContent>
+              </Tooltip>
+            </DockIcon>
           </Dock>
         </TooltipProvider>
       </motion.div>
     </>
-  );
-}
-
-/**
- * Enhanced Dock Demo Component with Animations
- */
-export function DockDemo() {
-  return (
-    <motion.div
-      className="flex flex-col items-center justify-center min-h-64 px-4"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
-      <motion.span
-        className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-4xl sm:text-6xl md:text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.8 }}
-      >
-        Dock
-      </motion.span>
-
-      <motion.div
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-      >
-        <TooltipProvider>
-          <Dock direction="middle" className="mt-4 sm:mt-6 md:mt-8">
-            {siteConfig.navbar.slice(0, 2).map((item, index) => (
-              <motion.div
-                key={item.label}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{
-                  delay: 0.8 + index * 0.1,
-                  duration: 0.4,
-                  type: "spring",
-                  bounce: 0.5,
-                }}
-              >
-                <DockIcon>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Link
-                        href={item.href}
-                        aria-label={item.label}
-                        className={cn(
-                          buttonVariants({ variant: "ghost", size: "icon" }),
-                          "size-10 sm:size-12 rounded-full"
-                        )}
-                      >
-                        <item.icon className="size-3 sm:size-4" />
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{item.label}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </DockIcon>
-              </motion.div>
-            ))}
-
-            <Separator orientation="vertical" className="h-full mx-1" />
-
-            {Object.entries(siteConfig.contact.social)
-              .slice(0, 4)
-              .map(([name, social], index) => (
-                <motion.div
-                  key={name}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{
-                    delay: 1.0 + index * 0.1,
-                    duration: 0.4,
-                    type: "spring",
-                    bounce: 0.5,
-                  }}
-                >
-                  <DockIcon>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Link
-                          href={social.url}
-                          aria-label={social.name}
-                          className={cn(
-                            buttonVariants({ variant: "ghost", size: "icon" }),
-                            "size-12 rounded-full"
-                          )}
-                        >
-                          <social.icon className="size-4" />
-                        </Link>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{name}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </DockIcon>
-                </motion.div>
-              ))}
-
-            <Separator orientation="vertical" className="h-full mx-1" />
-
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{
-                delay: 1.4,
-                duration: 0.4,
-                type: "spring",
-                bounce: 0.5,
-              }}
-            >
-              <DockIcon>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <AnimatedThemeToggler className="size-12 rounded-full hover:bg-accent flex items-center justify-center" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Theme</p>
-                  </TooltipContent>
-                </Tooltip>
-              </DockIcon>
-            </motion.div>
-          </Dock>
-        </TooltipProvider>
-      </motion.div>
-    </motion.div>
   );
 }

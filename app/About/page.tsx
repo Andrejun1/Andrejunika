@@ -372,12 +372,10 @@ const DockNavigation = memo(() => {
     <motion.div
       className="fixed bottom-0 left-0 right-0 mb-4"
       initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{
-        delay: 3.5,
-        type: "spring",
-        stiffness: 100,
-        damping: 20,
+      animate={{
+        y: 0,
+        opacity: 1,
+        transition: { delay: 1, duration: 0.8, type: "spring", bounce: 0.4 },
       }}
     >
       <TooltipProvider>
@@ -390,102 +388,96 @@ const DockNavigation = memo(() => {
         >
           {/* Main Navigation */}
           {siteConfig.navbar.map((item, index) => (
-            <motion.div
-              key={item.label}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{
-                delay: 3.7 + index * 0.1,
-                type: "spring",
-                stiffness: 200,
-                damping: 15,
-              }}
-            >
-              <DockIcon>
-                <Tooltip>
-                  <TooltipTrigger asChild>
+            <DockIcon key={item.label}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    whileHover={{ scale: 1.5 }}
+                    transition={{
+                      delay: 1.2 + index * 0.1,
+                      type: "spring",
+                      bounce: 0.4,
+                    }}
+                  >
                     <Link
                       href={item.href}
                       aria-label={item.label}
                       className={cn(
                         buttonVariants({ variant: "ghost", size: "icon" }),
-                        "size-12 rounded-full hover:bg-primary/10 transition-all duration-200"
+                        "size-10 sm:size-12 rounded-full"
                       )}
                     >
-                      <item.icon className="size-6" />
+                      <item.icon className="size-4 sm:size-6" />
                     </Link>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{item.label}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </DockIcon>
-            </motion.div>
+                  </motion.div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{item.label}</p>
+                </TooltipContent>
+              </Tooltip>
+            </DockIcon>
           ))}
 
           <Separator orientation="vertical" className="h-full mx-1" />
 
           {/* Social Media */}
           {Object.entries(siteConfig.contact.social).map(([name, social], index) => (
-            <motion.div
-              key={name}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{
-                delay: 4 + index * 0.1,
-                type: "spring",
-                stiffness: 200,
-                damping: 15,
-              }}
-            >
-              <DockIcon>
-                <Tooltip>
-                  <TooltipTrigger asChild>
+            <DockIcon key={name}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    whileHover={{ scale: 1.5 }}
+                    transition={{
+                      delay: 1.4 + index * 0.1,
+                      type: "spring",
+                      bounce: 0.4,
+                    }}
+                  >
                     <Link
                       href={social.url}
                       aria-label={social.name}
                       className={cn(
                         buttonVariants({ variant: "ghost", size: "icon" }),
-                        "size-12 rounded-full hover:bg-primary/10 transition-all duration-200"
+                        "size-10 sm:size-12 rounded-full"
                       )}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <social.icon className="size-6" />
+                      <social.icon className="size-4 sm:size-6" />
                     </Link>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{name}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </DockIcon>
-            </motion.div>
+                  </motion.div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{name}</p>
+                </TooltipContent>
+              </Tooltip>
+            </DockIcon>
           ))}
 
           <Separator orientation="vertical" className="h-full mx-1" />
 
           {/* Theme Toggle */}
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{
-              delay: 4.5,
-              type: "spring",
-              stiffness: 200,
-              damping: 15,
-            }}
-          >
-            <DockIcon>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <AnimatedThemeToggler className="size-12 rounded-full hover:bg-accent flex items-center justify-center transition-all duration-200" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Theme</p>
-                </TooltipContent>
-              </Tooltip>
-            </DockIcon>
-          </motion.div>
+          <DockIcon>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  whileHover={{ scale: 1.5 }}
+                  transition={{ delay: 1.8, type: "spring", bounce: 0.4 }}
+                >
+                  <AnimatedThemeToggler className="size-10 sm:size-12 rounded-full hover:bg-accent flex items-center justify-center" />
+                </motion.div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Theme</p>
+              </TooltipContent>
+            </Tooltip>
+          </DockIcon>
         </Dock>
       </TooltipProvider>
     </motion.div>

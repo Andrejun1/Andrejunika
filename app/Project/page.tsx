@@ -173,29 +173,6 @@ const contentVariants = {
   },
 };
 
-const dockVariants = {
-  hidden: { y: 100, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: "spring" as const, stiffness: 100, damping: 20, delay: 1.2 },
-  },
-};
-
-const dockIconVariants = {
-  hidden: { scale: 0, opacity: 0 },
-  visible: (delay: number) => ({
-    scale: 1,
-    opacity: 1,
-    transition: {
-      delay: 1.5 + delay,
-      type: "spring" as const,
-      stiffness: 200,
-      damping: 15,
-    },
-  }),
-};
-
 export default function ProjectPage() {
   const [selectedFilter, setSelectedFilter] = useState("All");
 
@@ -460,106 +437,119 @@ export default function ProjectPage() {
         ))}
       </motion.div>
 
-      {/* Dock navigasi */}
-      <motion.div
-        className="fixed bottom-0 left-0 right-0 mb-4"
-        variants={dockVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <TooltipProvider>
-          <Dock
-            direction="middle"
-            className="border-secondary bg-background/80 backdrop-blur-sm"
-            iconSize={35}
-            iconMagnification={60}
-            iconDistance={100}
-          >
-            {siteConfig.navbar.map((item, index) => (
+      {/* ✅ Fixed Animated Dock Navigation with Bounce */}
+<motion.div
+  className="fixed bottom-0 left-0 right-0 mb-4"
+  initial={{ y: 100, opacity: 0 }}
+  animate={{
+    y: 0,
+    opacity: 1,
+    transition: { delay: 1, duration: 0.8, type: "spring", bounce: 0.4 },
+  }}
+>
+  <TooltipProvider>
+    <Dock
+      direction="middle"
+      className="border-secondary bg-background/80 backdrop-blur-sm"
+      iconSize={35}
+      iconMagnification={60}
+      iconDistance={100}
+    >
+      {/* Navigation Items */}
+      {siteConfig.navbar.map((item, index) => (
+        <DockIcon key={item.label}>
+          <Tooltip>
+            <TooltipTrigger asChild>
               <motion.div
-                key={item.label}
-                variants={dockIconVariants}
-                custom={index * 0.1}
-                initial="hidden"
-                animate="visible"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                whileHover={{ scale: 1.5 }}
+                transition={{
+                  delay: 1.2 + index * 0.1,
+                  type: "spring",
+                  bounce: 0.4,
+                }}
               >
-                <DockIcon>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Link
-                        href={item.href}
-                        aria-label={item.label}
-                        className={cn(
-                          buttonVariants({ variant: "ghost", size: "icon" }),
-                          "size-12 rounded-full"
-                        )}
-                      >
-                        <item.icon className="size-6" />
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{item.label}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </DockIcon>
+                <Link
+                  href={item.href}
+                  aria-label={item.label}
+                  className={cn(
+                    buttonVariants({ variant: "ghost", size: "icon" }),
+                    "size-10 sm:size-12 rounded-full"
+                  )}
+                >
+                  <item.icon className="size-4 sm:size-6" />
+                </Link>
               </motion.div>
-            ))}
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{item.label}</p>
+            </TooltipContent>
+          </Tooltip>
+        </DockIcon>
+      ))}
 
-            <Separator orientation="vertical" className="h-full mx-1" />
+      <Separator orientation="vertical" className="h-full mx-1" />
 
-            {Object.entries(siteConfig.contact.social).map(([name, social], index) => (
-              <motion.div
-                key={name}
-                variants={dockIconVariants}
-                custom={(siteConfig.navbar.length + index) * 0.1}
-                initial="hidden"
-                animate="visible"
-              >
-                <DockIcon>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Link
-                        href={social.url}
-                        aria-label={social.name}
-                        className={cn(
-                          buttonVariants({ variant: "ghost", size: "icon" }),
-                          "size-12 rounded-full"
-                        )}
-                      >
-                        <social.icon className="size-6" />
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{name}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </DockIcon>
-              </motion.div>
-            ))}
+      {/* Social Icons */}
+      {Object.entries(siteConfig.contact.social).map(
+        ([name, social], index) => (
+          <DockIcon key={name}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  whileHover={{ scale: 1.5 }}
+                  transition={{
+                    delay: 1.4 + index * 0.1,
+                    type: "spring",
+                    bounce: 0.4,
+                  }}
+                >
+                  <Link
+                    href={social.url}
+                    aria-label={social.name}
+                    className={cn(
+                      buttonVariants({ variant: "ghost", size: "icon" }),
+                      "size-10 sm:size-12 rounded-full"
+                    )}
+                  >
+                    <social.icon className="size-4 sm:size-6" />
+                  </Link>
+                </motion.div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{name}</p>
+              </TooltipContent>
+            </Tooltip>
+          </DockIcon>
+        )
+      )}
 
-            <Separator orientation="vertical" className="h-full mx-1" />
+      <Separator orientation="vertical" className="h-full mx-1" />
 
+      {/* Theme Toggle */}
+      <DockIcon>
+        <Tooltip>
+          <TooltipTrigger asChild>
             <motion.div
-              variants={dockIconVariants}
-              custom={(siteConfig.navbar.length +
-                Object.keys(siteConfig.contact.social).length) * 0.1}
-              initial="hidden"
-              animate="visible"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              whileHover={{ scale: 1.5 }}
+              transition={{ delay: 1.8, type: "spring", bounce: 0.4 }}
             >
-              <DockIcon>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <AnimatedThemeToggler className="size-12 rounded-full hover:bg-accent flex items-center justify-center" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Theme</p>
-                  </TooltipContent>
-                </Tooltip>
-              </DockIcon>
+              <AnimatedThemeToggler className="size-10 sm:size-12 rounded-full hover:bg-accent flex items-center justify-center" />
             </motion.div>
-          </Dock>
-        </TooltipProvider>
-      </motion.div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Theme</p>
+          </TooltipContent>
+        </Tooltip>
+      </DockIcon>
+    </Dock>
+  </TooltipProvider>
+</motion.div>
     </motion.div>
   );
 }
