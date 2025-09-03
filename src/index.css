@@ -1,0 +1,333 @@
+@import "tailwindcss";
+
+/* Theme variables */
+:root {
+  color-scheme: dark light;
+  
+  /* Dark theme colors */
+  --bg-dark: #0b0b0f;
+  --text-dark: #e6e6f0;
+  --glass-dark: rgba(255, 255, 255, 0.08);
+  --border-dark: rgba(255, 255, 255, 0.12);
+  --shadow-dark: rgba(0, 0, 0, 0.45);
+  
+  /* Light theme colors */
+  --bg-light: #f8fafc;
+  --text-light: #1e293b;
+  --glass-light: rgba(255, 255, 255, 0.8);
+  --border-light: rgba(0, 0, 0, 0.1);
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  
+  /* Brand colors */
+  --exaid-pink: #ff2bb3;
+  --exaid-green: #8bfd00;
+  --exaid-cyan: #29ffe3;
+  --exaid-purple: #7a2ff7;
+  --exaid-blue: #3b82f6;
+  --exaid-yellow: #fbbf24;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --bg: var(--bg-dark);
+  --text: var(--text-dark);
+  --glass: var(--glass-dark);
+  --border: var(--border-dark);
+  --shadow: var(--shadow-dark);
+  --grid-color: rgba(255, 255, 255, 0.05);
+  --neon-glow: rgba(255, 43, 179, 0.6);
+  --neon-glow-secondary: rgba(41, 255, 227, 0.35);
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --bg: var(--bg-light);
+  --text: var(--text-light);
+  --glass: var(--glass-light);
+  --border: var(--border-light);
+  --shadow: var(--shadow-light);
+  --grid-color: rgba(0, 0, 0, 0.05);
+  --neon-glow: rgba(59, 130, 246, 0.6);
+  --neon-glow-secondary: rgba(147, 197, 253, 0.35);
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dynamic background gradients */
+[data-theme="dark"] body {
+  background: radial-gradient(1200px 600px at 100% -10%, rgba(123, 47, 247, 0.22), transparent 60%),
+              radial-gradient(900px 500px at -10% 100%, rgba(41, 255, 227, 0.16), transparent 60%),
+              linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-dark) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+}
+
+[data-theme="light"] body {
+  background: radial-gradient(1200px 600px at 100% -10%, rgba(59, 130, 246, 0.15), transparent 60%),
+              radial-gradient(900px 500px at -10% 100%, rgba(147, 197, 253, 0.12), transparent 60%),
+              linear-gradient(180deg, var(--bg-light) 0%, var(--bg-light) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fixed header offset for anchor scrolling */
+.has-fixed-header section { scroll-margin-top: 96px; }
+
+/* Intro extras */
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    var(--grid-color) 0px,
+    var(--grid-color) 1px,
+    transparent 3px,
+    transparent 6px
+  );
+  animation: scan 3.2s linear infinite;
+}
+
+@keyframes scan {
+  from { background-position: 0 0; }
+  to { background-position: 0 120px; }
+}
+
+.pulse {
+  animation: pulseGlow 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from { 
+    text-shadow: 0 0 8px var(--neon-glow), 0 0 18px var(--neon-glow-secondary); 
+  }
+  to { 
+    text-shadow: 0 0 14px var(--neon-glow), 0 0 28px var(--neon-glow-secondary); 
+  }
+}
+
+.blink { animation: blink 1s steps(2, end) infinite; }
+@keyframes blink { 0%, 50% { opacity: 1 } 50.01%, 100% { opacity: 0.2 } }
+
+.font-orbitron {
+  font-family: Orbitron, Poppins, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.exaid-grid {
+  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px;
+  background-position: 0 0, 0 0;
+  mask-image: radial-gradient(120% 120% at 50% 50%, black 55%, transparent 100%);
+}
+
+/* Mobile refinements */
+@media (max-width: 640px) {
+  body { background-attachment: scroll; }
+  .exaid-grid { background-size: 28px 28px, 28px 28px; }
+}
+
+.neon-text {
+  text-shadow: 0 0 12px var(--neon-glow), 0 0 32px var(--neon-glow-secondary);
+}
+
+.glass {
+  background: linear-gradient(180deg, var(--glass), rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 40px var(--shadow), inset 0 0 80px rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .glass {
+  background: linear-gradient(180deg, var(--glass), rgba(255, 255, 255, 0.6));
+  box-shadow: 0 10px 40px var(--shadow), inset 0 0 80px rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--exaid-pink), var(--exaid-purple));
+  color: white;
+  transition: all 0.3s ease;
+}
+.btn-primary:hover { 
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 43, 179, 0.3);
+}
+
+.btn-ghost { 
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="light"] .btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px var(--neon-glow); }
+  50% { box-shadow: 0 0 40px var(--neon-glow), 0 0 60px var(--neon-glow-secondary); }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Enhanced glass morphism for light theme */
+[data-theme="light"] .glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+/* Fix for form inputs in light theme */
+[data-theme="light"] input,
+[data-theme="light"] textarea {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: #1e293b !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: rgba(30, 41, 59, 0.5) !important;
+}
+
+/* Improved text contrast for light theme */
+[data-theme="light"] .text-white\/80 {
+  color: rgba(30, 41, 59, 0.8);
+}
+
+[data-theme="light"] .text-white\/70 {
+  color: rgba(30, 41, 59, 0.7);
+}
+
+[data-theme="light"] .text-white\/60 {
+  color: rgba(30, 41, 59, 0.6);
+}
+
+/* Enhanced hover effects */
+.glass:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 50px var(--shadow);
+}
+
+[data-theme="light"] .glass:hover {
+  box-shadow: 
+    0 15px 50px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Text truncation utilities */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Interactive cursor effects */
+.interactive-cursor {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.interactive-cursor:hover {
+  transform: scale(1.05);
+}
+
+/* Enhanced button animations */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+/* Pulse animation for special elements */
+@keyframes gentlePulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.02);
+    opacity: 0.8;
+  }
+}
+
+.gentle-pulse {
+  animation: gentlePulse 3s ease-in-out infinite;
+}
