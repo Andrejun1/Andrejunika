@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: 'dist',
+  distDir: 'dist', // opsional, kalau ingin build ke folder dist
 }
 
 module.exports = nextConfig
